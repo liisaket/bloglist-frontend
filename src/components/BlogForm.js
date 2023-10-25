@@ -1,9 +1,9 @@
-import { useState } from "react"
+import { useState } from 'react'
 import blogService from '../services/blogs'
 
 const BlogForm = ({
-    blogs, setBlogs, blogFormRef, emsgSet, imsgSet }) => {
-  const [title, setTitle] = useState('') 
+  blogs, setBlogs, blogFormRef, emsgSet, imsgSet }) => {
+  const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
 
@@ -34,7 +34,7 @@ const BlogForm = ({
       <form onSubmit={handleNewBlog}>
         <div>
           title:
-            <input
+          <input
             type="text"
             value={title}
             name="Title"
@@ -43,7 +43,7 @@ const BlogForm = ({
         </div>
         <div>
           author:
-            <input
+          <input
             type="text"
             value={author}
             name="Author"
@@ -52,7 +52,7 @@ const BlogForm = ({
         </div>
         <div>
           url:
-            <input
+          <input
             type="text"
             value={url}
             name="Url"
@@ -61,7 +61,7 @@ const BlogForm = ({
         </div>
         <button type="submit">create</button>
       </form>
-    </div> 
-)}
+    </div>
+  )}
 
 export default BlogForm

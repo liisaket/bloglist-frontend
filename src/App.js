@@ -19,14 +19,14 @@ const App = () => {
   const [infoMessage, setInfoMessage] = useState(null)
 
   // user log in
-  const [username, setUsername] = useState('') 
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [blogs])
 
   useEffect(() => {
@@ -84,19 +84,19 @@ const App = () => {
         />
       </Togglable>}
       {user && <div>
-       <p>{user.name} logged in</p>
-       <LogoutForm handleLogout={handleLogout} />
-       <Togglable buttonLabel='create new blog' ref={blogFormRef}>
+        <p>{user.name} logged in</p>
+        <LogoutForm handleLogout={handleLogout} />
+        <Togglable buttonLabel='create new blog' ref={blogFormRef}>
           <BlogForm blogs={blogs} setBlogs={setBlogs} blogFormRef={blogFormRef}
             emsgSet={setErrorMessage} imsgSet={setInfoMessage} />
         </Togglable>
         {blogs.sort(function(first, second) {
           return second.likes - first.likes}).map(blog =>
           <Blog key={blog.id} blog={blog} user={user} setBlogs={setBlogs}
-          setImsg={setInfoMessage} />
+            setImsg={setInfoMessage} />
         )}
       </div>
-    }
+      }
     </div>
   )
 }

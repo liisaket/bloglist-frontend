@@ -12,10 +12,10 @@ const Blog = ({ blog, user, setBlogs, setImsg }) => {
 
   const [viewButton, setButton] = useState('view')
 
-  const toggleInfo = { display: viewButton == 'view' ? 'none' : '' }
+  const toggleInfo = { display: viewButton === 'view' ? 'none' : '' }
 
   const handleClick = () => {
-    setButton(viewButton == 'view' ? 'hide' : 'view')
+    setButton(viewButton === 'view' ? 'hide' : 'view')
   }
 
   const handleLikes = async () => {
@@ -45,17 +45,17 @@ const Blog = ({ blog, user, setBlogs, setImsg }) => {
   }
 
   return (
-  <div style={blogStyle}>
-    <i>{blog.title}</i> by {blog.author} <button onClick={handleClick}>{viewButton}</button>
-    <div style={toggleInfo}>
-      {blog.url}<br></br>
+    <div style={blogStyle}>
+      <i>{blog.title}</i> by {blog.author} <button onClick={handleClick}>{viewButton}</button>
+      <div style={toggleInfo}>
+        {blog.url}<br></br>
       likes: {blog.likes} <button onClick={handleLikes}>like</button><br></br>
-      {blog.user.name}<br></br>
-      {user.id === blog.user.id && <div>
-      <button onClick={handleRemove}>remove</button><br></br>
-      </div>}
+        {blog.user.name}<br></br>
+        {user.id === blog.user.id && <div>
+          <button onClick={handleRemove}>remove</button><br></br>
+        </div>}
+      </div>
     </div>
-  </div>
-)}
+  )}
 
 export default Blog
