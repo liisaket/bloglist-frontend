@@ -27,7 +27,7 @@ const App = () => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
     )  
-  }, [])
+  }, [blogs])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
@@ -92,7 +92,8 @@ const App = () => {
         </Togglable>
         {blogs.sort(function(first, second) {
           return second.likes - first.likes}).map(blog =>
-          <Blog key={blog.id} blog={blog} user={user} setBlogs={setBlogs} />
+          <Blog key={blog.id} blog={blog} user={user} setBlogs={setBlogs}
+          setImsg={setInfoMessage} />
         )}
       </div>
     }
