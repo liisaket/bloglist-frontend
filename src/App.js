@@ -90,7 +90,8 @@ const App = () => {
           <BlogForm blogs={blogs} setBlogs={setBlogs} blogFormRef={blogFormRef}
             emsgSet={setErrorMessage} imsgSet={setInfoMessage} />
         </Togglable>
-        {blogs.map(blog =>
+        {blogs.sort(function(first, second) {
+          return second.likes - first.likes}).map(blog =>
           <Blog key={blog.id} blog={blog} user={user} setBlogs={setBlogs} />
         )}
       </div>
