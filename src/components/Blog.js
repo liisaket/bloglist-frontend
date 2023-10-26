@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import blogService from '../services/blogs'
 
-const Blog = ({ blog, user, setBlogs, setImsg }) => {
+const Blog = ({ blog, user, updateBlog, removeBlog }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -19,35 +19,26 @@ const Blog = ({ blog, user, setBlogs, setImsg }) => {
   }
 
   const handleLikes = async () => {
-    const updateBlog = {
+    const newInfo = {
+      id: blog.id,
       title: blog.title,
       author: blog.author,
       likes: blog.likes+1,
-      user: user.id
+      user: blog.user.id
     }
-    await blogService.update(blog.id, updateBlog)
-    const response = await blogService.getAll()
-    setBlogs(response)
+    updateBlog(newInfo.id, newInfo)
   }
 
   const handleRemove = async () => {
-    if (window.confirm(`Remove blog ${blog.title} by ${blog.author}?`)) {
-      await blogService.remove(blog.id, user.token)
-      const response = await blogService.getAll()
-      setBlogs(response)
-      setImsg(
-        `Removed blog ${blog.title} by ${blog.author}`
-      )
-      setTimeout(() => {
-        setImsg(null)
-      }, 5000)
-    }
+    removeBlog(blog.id, blog.title, blog.author)
   }
 
   return (
-    <div style={blogStyle}>
-      <i>{blog.title}</i> by {blog.author} <button onClick={handleClick}>{viewButton}</button>
-      <div style={toggleInfo}>
+    <div>
+      <div style={blogStyle} className='default'>
+        <i>{blog.title}</i> by {blog.author} <button onClick={handleClick}>{viewButton}</button>
+      </div>
+      <div style={toggleInfo} className='hidden'>
         {blog.url}<br></br>
       likes: {blog.likes} <button onClick={handleLikes}>like</button><br></br>
         {blog.user.name}<br></br>

@@ -27,7 +27,7 @@ const App = () => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
     )
-  }, [blogs])
+  }, [])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
@@ -37,6 +37,52 @@ const App = () => {
       blogService.setToken(user.token)
     }
   }, [])
+
+  const createBlog = async (newBlog) => {
+    blogFormRef.current.toggleVisibility()
+    try {
+      const createdBlog = await blogService.create(newBlog)
+      blogs.concat(createdBlog)
+      const response = await blogService.getAll()
+      setBlogs(response)
+      setInfoMessage(`added a new blog ${createdBlog.title} by ${createdBlog.author}`)
+      setTimeout(() => {
+        setInfoMessage(null)
+      }, 5000)
+    } catch (exception) {
+      setErrorMessage('error')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }
+
+  const updateBlog = async (id, newInfo) => {
+    try {
+      await blogService.update(id, newInfo)
+      const response = await blogService.getAll()
+      setBlogs(response)
+    } catch (exception) {
+      setErrorMessage('error')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }
+
+  const removeBlog = async (id, title, author) => {
+    if (window.confirm(`Remove blog ${title} by ${author}?`)) {
+      await blogService.remove(id, user.token)
+      const response = await blogService.getAll()
+      setBlogs(response)
+      setInfoMessage(
+        `Removed blog ${title} by ${author}`
+      )
+      setTimeout(() => {
+        setInfoMessage(null)
+      }, 5000)
+    }
+  }
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -87,13 +133,12 @@ const App = () => {
         <p>{user.name} logged in</p>
         <LogoutForm handleLogout={handleLogout} />
         <Togglable buttonLabel='create new blog' ref={blogFormRef}>
-          <BlogForm blogs={blogs} setBlogs={setBlogs} blogFormRef={blogFormRef}
-            emsgSet={setErrorMessage} imsgSet={setInfoMessage} />
+          <BlogForm createBlog={createBlog} />
         </Togglable>
         {blogs.sort(function(first, second) {
           return second.likes - first.likes}).map(blog =>
-          <Blog key={blog.id} blog={blog} user={user} setBlogs={setBlogs}
-            setImsg={setInfoMessage} />
+          <Blog key={blog.id} blog={blog} user={user}
+            updateBlog={updateBlog} removeBlog={removeBlog} />
         )}
       </div>
       }
