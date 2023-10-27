@@ -12,11 +12,13 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "dev": "vite --host",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "jest",
     "eject": "react-scripts eject",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "cypress:open": "cypress open"
   },
   "eslintConfig": {
     "extends": [
@@ -49,6 +51,7 @@
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.5.1",
+    "cypress": "^13.3.3",
     "eslint-plugin-jest": "^27.4.3",
     "eslint-plugin-react-refresh": "^0.4.3",
     "jest-environment-jsdom": "^29.7.0"
