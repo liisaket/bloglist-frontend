@@ -87,17 +87,22 @@ describe('Blog app', function() {
 
       it('a blog can be liked', function() {
         cy.contains('first test by tester')
-        cy.contains('view').click()
+          .contains('view')
+          .click()
+
         cy.contains('first test url')
-        cy.contains('likes: 0')
-        cy.contains('like').click()
-        cy.contains('likes: 1')
+          .contains('likes: 0')
+          .contains('like')
+          .click()
+        
+        cy.contains('first test url')
+          .contains('likes: 1')
       })
 
       it('a blog can be removed', function() {
         cy.contains('second test by tester')
-        .contains('view')
-        .click()
+          .contains('view')
+          .click()
 
         cy.contains('second test url')
           .contains('remove')
@@ -107,6 +112,54 @@ describe('Blog app', function() {
           .should('contain', 'Removed blog second test by tester')
           .and('have.css', 'color', 'rgb(0, 128, 0)')
           .and('have.css', 'border-style', 'solid')
+      })
+
+      it('the remove button exists only for the creator', function() {
+        cy.contains('logout').click()
+        cy.login({ username: 'supermario', password: 'salainen' })
+
+        cy.contains('first test by tester')
+          .contains('view')
+          .click()
+        
+        cy.contains('first test url')
+          .should('contain', 'likes: 0')
+          .should('contain', 'testaaja')
+          .should('not.contain', 'remove')
+      })
+
+      it('blogs are sorted by likes', function() {
+        cy.get('.default').eq(0).should('contain', 'first test by tester')
+        cy.get('.default').eq(1).should('contain', 'second test by tester')
+
+        cy.contains('second test by tester')
+          .contains('view')
+          .click()
+
+        cy.contains('second test url')
+          .contains('likes: 0')
+          .contains('like')
+          .click()
+        
+        cy.get('.default').eq(0).should('contain', 'second test by tester')
+        cy.get('.default').eq(1).should('contain', 'first test by tester')
+
+        cy.contains('first test by tester')
+          .contains('view')
+          .click()
+
+        cy.contains('first test url')
+          .contains('likes: 0')
+          .contains('like')
+          .click()
+        
+        cy.contains('first test url')
+          .contains('likes: 1')
+          .contains('like')
+          .click()
+        
+        cy.get('.default').eq(0).should('contain', 'first test by tester')
+        cy.get('.default').eq(1).should('contain', 'second test by tester')
       })
     })
   })
