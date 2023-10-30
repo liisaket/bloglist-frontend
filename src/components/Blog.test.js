@@ -17,6 +17,7 @@ const blog = {
   user: testUser
 }
 
+// ERROR TESTEISSÄ
 test('renders title and author but details are hidden', () => {
   const { container } = render(<Blog blog={blog} user={testUser} />)
 
@@ -28,6 +29,7 @@ test('renders title and author but details are hidden', () => {
   expect(div).not.toHaveTextContent(blog.user)
 })
 
+// ERROR TESTEISSÄ
 test('clicking view button shows url, likes, user values', async () => {
   const { container } = render(<Blog blog={blog} user={testUser} />)
 
@@ -42,7 +44,7 @@ test('clicking view button shows url, likes, user values', async () => {
   const user = userEvent.setup()
   const viewButton = screen.getByText('view')
   await user.click(viewButton)
-  
+
   expect(divHidden).not.toHaveStyle('display: none')
   expect(divHidden).toHaveTextContent(blog.url)
   expect(divHidden).toHaveTextContent(blog.likes)

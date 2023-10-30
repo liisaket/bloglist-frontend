@@ -94,7 +94,7 @@ describe('Blog app', function() {
           .contains('likes: 0')
           .contains('like')
           .click()
-        
+
         cy.contains('first test url')
           .contains('likes: 1')
       })
@@ -107,7 +107,7 @@ describe('Blog app', function() {
         cy.contains('second test url')
           .contains('remove')
           .click()
-        
+
         cy.get('.notif')
           .should('contain', 'Removed blog second test by tester')
           .and('have.css', 'color', 'rgb(0, 128, 0)')
@@ -121,7 +121,7 @@ describe('Blog app', function() {
         cy.contains('first test by tester')
           .contains('view')
           .click()
-        
+
         cy.contains('first test url')
           .should('contain', 'likes: 0')
           .should('contain', 'testaaja')
@@ -140,7 +140,7 @@ describe('Blog app', function() {
           .contains('likes: 0')
           .contains('like')
           .click()
-        
+
         cy.get('.default').eq(0).should('contain', 'second test by tester')
         cy.get('.default').eq(1).should('contain', 'first test by tester')
 
@@ -152,12 +152,12 @@ describe('Blog app', function() {
           .contains('likes: 0')
           .contains('like')
           .click()
-        
+
         cy.contains('first test url')
           .contains('likes: 1')
           .contains('like')
           .click()
-        
+
         cy.get('.default').eq(0).should('contain', 'first test by tester')
         cy.get('.default').eq(1).should('contain', 'second test by tester')
       })
